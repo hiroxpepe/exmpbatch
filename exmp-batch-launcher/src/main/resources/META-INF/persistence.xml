@@ -8,16 +8,14 @@
         <non-jta-data-source/>
         <class>org.examproject.batch.entity.Content</class>
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
-            <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
-            <property name="hibernate.connection.pool_size" value="0"/>
-            <property name="hibernate.max_fetch_depth" value="3"/>
+            <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
+            <property name="hibernate.connection.pool_size" value="0" />
+            <property name="hibernate.max_fetch_depth" value="3" />
             <!-- setting 'hibernate.hbm2ddl.auto' to 'create' will result in
                 'import.sql' (in the root of the classpath) being used to populate the db
             -->
-<!--            <property name="hibernate.hbm2ddl.auto" value="update" />-->
+            <!--<property name="hibernate.hbm2ddl.auto" value="update" />-->
             <property name="hibernate.hbm2ddl.auto" value="create" />
-            <property name="hibernate.hbm2ddl.import_files" value="import.sql" />
         </properties>
     </persistence-unit>
 </persistence>
