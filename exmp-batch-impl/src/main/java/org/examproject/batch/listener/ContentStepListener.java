@@ -38,7 +38,7 @@ public class ContentStepListener implements StepExecutionListener  {
 
    @Override
    public void beforeStep(StepExecution stepExecution) {
-        LOG.info("▼ beforeStep called.");
+        LOG.info(">>>>>>>>>>>>>>>>>>>>>>>> beforeStep called.");
         try {
             contentService.load();
         } catch (Exception e) {
@@ -49,14 +49,14 @@ public class ContentStepListener implements StepExecutionListener  {
    
    @Override
    public ExitStatus afterStep(StepExecution stepExecution) {
-       LOG.info("▲ afterStep called.");
+       LOG.info("<<<<<<<<<<<<<<<<<<<<<<<<<< afterStep called.");
        try {
            contentService.save();
         } catch (Exception e) {
             LOG.error("error: " + e.getMessage());
             throw new RuntimeException(e);
         }
-        LOG.info("■ ExitStatus.COMPLETED returned.");
+        LOG.info("============ ExitStatus.COMPLETED returned.");
         return ExitStatus.COMPLETED;
    }
 }

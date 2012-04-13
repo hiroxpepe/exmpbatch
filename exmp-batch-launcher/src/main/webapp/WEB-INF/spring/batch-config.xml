@@ -1,72 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/batch"
-    xmlns:beans="http://www.springframework.org/schema/beans"
+<beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-        http://www.springframework.org/schema/batch
-        http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
     <!--//////////////////////////////////////////////////////////////////////////////-->
     <!-- Spring Batch -->
 
     <!-- single task -->
-<!--    <beans:bean id="taskExecutor" 
+<!--    <bean id="taskExecutor" 
         class="org.springframework.core.task.SyncTaskExecutor">
-    </beans:bean>-->
+    </bean>-->
 
     <!-- thread pool task -->
-    <beans:bean id="taskExecutor"
+    <bean id="taskExecutor"
         class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-        <beans:property name="corePoolSize" value="5" />
-        <beans:property name="maxPoolSize" value="10" />
-        <beans:property name="queueCapacity" value="25" />
-    </beans:bean>
+        <property name="corePoolSize" value="5" />
+        <property name="maxPoolSize" value="10" />
+        <property name="queueCapacity" value="25" />
+    </bean>
 
-    <beans:bean id="jobLauncher"
+    <bean id="jobLauncher"
         class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
-        <beans:property name="jobRepository" ref="jobRepository" />
-    </beans:bean>
+        <property name="jobRepository" ref="jobRepository" />
+    </bean>
 
-    <beans:bean id="jobRepository"
+    <bean id="jobRepository"
         class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
-        <beans:property name="isolationLevelForCreate" value="ISOLATION_DEFAULT"/>
-        <beans:property name="transactionManager" ref="transactionManager"/>
-    </beans:bean>
+        <property name="isolationLevelForCreate" value="ISOLATION_DEFAULT" />
+        <property name="transactionManager" ref="transactionManager" />
+    </bean>
 
-    <!--//////////////////////////////////////////////////////////////////////////////-->
-
-    <job id="contentJob" job-repository="jobRepository">
-        <step id="step1">
-        <tasklet task-executor="taskExecutor">
-            <chunk reader="contentItemReader"
-                processor="compositeItemProcessor"
-                writer="compositeItemWriter"
-                commit-interval="1"/>
-            <listeners>
-                <listener ref="contentStepListener"/>
-                <listener ref="contentChunkListener"/>
-            </listeners>
-        </tasklet>
-        </step>
-    </job>
-      
-    <beans:bean id="compositeItemProcessor"
-        class="org.springframework.batch.item.support.CompositeItemProcessor">
-        <beans:property name="delegates">
-            <beans:list>
-                <beans:ref bean="contentItemProcessor"/>
-            </beans:list>
-        </beans:property>
-    </beans:bean>
-
-    <beans:bean id="compositeItemWriter"
-        class="org.springframework.batch.item.support.CompositeItemWriter">
-        <beans:property name="delegates">
-            <beans:list>
-                <beans:ref bean="contentItemWriter"/>
-            </beans:list>
-        </beans:property>
-    </beans:bean>
-
-</beans:beans>
+</beans>

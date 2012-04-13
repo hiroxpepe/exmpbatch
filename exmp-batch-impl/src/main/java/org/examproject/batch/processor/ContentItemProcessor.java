@@ -49,6 +49,9 @@ public class ContentItemProcessor implements ItemProcessor {
                 "process -- id: " + dto.getId() +
                 " name: " + dto.getName()
             );
+            
+            // dummy wait..
+            Thread.sleep(1000);
 
             return dto;
 

@@ -17,10 +17,28 @@
     <task:scheduled-tasks>
         <task:scheduled
             ref="workerFacade"
-            method="worke"
+            method="work"
             cron="0 */1 * * * ?"
         />
     </task:scheduled-tasks>
+    
+    <bean id="compositeItemProcessor"
+        class="org.springframework.batch.item.support.CompositeItemProcessor">
+        <property name="delegates">
+            <list>
+                <ref bean="contentItemProcessor" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="compositeItemWriter"
+        class="org.springframework.batch.item.support.CompositeItemWriter">
+        <property name="delegates">
+            <list>
+                <ref bean="contentItemWriter" />
+            </list>
+        </property>
+    </bean>
 
     <!--//////////////////////////////////////////////////////////////////////////////-->
 

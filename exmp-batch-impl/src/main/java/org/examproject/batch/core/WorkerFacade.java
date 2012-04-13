@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 
+import org.apache.commons.lang.time.StopWatch;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.core.Job;
@@ -41,11 +42,14 @@ public class WorkerFacade {
     @Inject
     private final Job job = null;
     
-    public void worke() {
+    public void work() {
         LOG.debug("called.");
         try {
-            LOG.info("▼ run a job begin.");
+            LOG.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> run a job begin.");
 
+            StopWatch stopWatch = new StopWatch();
+            stopWatch.start();
+            
             // create the jobparameter.
             JobParameter parameter = new JobParameter(
                 new Date()
@@ -65,7 +69,11 @@ public class WorkerFacade {
                 )
             );
 
-            LOG.info("▲ run a job end.");
+            stopWatch.stop();
+            LOG.info("execute time: " + stopWatch.getTime() + " msec");
+            
+            LOG.info("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< run a job end.");
+            
         } catch (Exception e) {
             LOG.fatal("fatal: " + e.getMessage());
         }

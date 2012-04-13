@@ -29,7 +29,7 @@ public final class ContentChunkListener implements ChunkListener {
 
     @Override
     public void beforeChunk() {
-        LOG.info("▽ beforeChunk called.");
+        LOG.info(">>>>>>>> beforeChunk called.");
         try {
             // TODO:
         } catch (Exception e) {
@@ -40,7 +40,7 @@ public final class ContentChunkListener implements ChunkListener {
 
     @Override
     public void afterChunk() {
-        LOG.info("△ afterChunk called.");
+        LOG.info("<<<<<<<<< afterChunk called.");
         try {
             // TODO:
         } catch (Exception e) {

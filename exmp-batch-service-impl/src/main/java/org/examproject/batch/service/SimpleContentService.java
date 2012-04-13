@@ -15,7 +15,7 @@
 package org.examproject.batch.service;
 
 import java.util.List;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import javax.inject.Inject;
 
 import org.apache.commons.logging.Log;
@@ -37,7 +37,7 @@ public class SimpleContentService implements ContentService {
     @Inject
     private final ApplicationContext context = null;
 
-    private List<ContentDto> dtoList = new ArrayList<ContentDto>();
+    private List<ContentDto> dtoList = new CopyOnWriteArrayList<ContentDto>();
 
     @Override
     public void load() {
