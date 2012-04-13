@@ -22,7 +22,7 @@
         </layout>
     </appender>
 
-    <category name="org.springframework" >
+    <category name="org.springframework, org.hibernate" >
         <priority value="info"/>
     </category>
 
