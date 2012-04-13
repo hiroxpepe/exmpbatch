@@ -6,7 +6,7 @@
     <groupId>org.examproject</groupId>
     <artifactId>exmpbatch</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <name>exmpbatch</name>
 
     <modules>
@@ -14,6 +14,7 @@
         <module>exmp-batch-impl</module>
         <module>exmp-batch-service</module>
         <module>exmp-batch-service-impl</module>
+        <module>exmp-bache-data-jpa</module>
     </modules>
 
 </project>

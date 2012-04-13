@@ -10,25 +10,25 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ */ 
 
-package org.examproject.batch.service;
+package org.examproject.batch.repository
 
-import java.util.List;
+import java.lang.Long
+import java.util.List
 
-import org.examproject.batch.dto.ContentDto;
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+
+import org.examproject.batch.entity.Content
 
 /**
- * the simple service interface.
  * @author hiroxpepe
  */
-public interface ContentService<T> {
-
-    List<ContentDto> getList();
-
-    void receive(ContentDto o);
-
-    void load();
-
-    void save();
+trait ContentRepository extends JpaRepository[Content, Long] {
+    
+    def findById(id: Long): Content
+    
+    @Query("select c from Content c where c.isComplete = false")
+    def findNotCompleted(): List[Content]
 }

@@ -13,8 +13,8 @@
     
     <import resource="batch-config.xml" />
     
-    <import resource="user/exmp-batch-service-impl-config.xml"/>
+    <import resource="user/exmp-batch-bean-config.xml" />
 
-    <import resource="user/exmp-batch-job-config.xml"/>
+    <import resource="user/exmp-batch-job-config.xml" />
 
 </beans>

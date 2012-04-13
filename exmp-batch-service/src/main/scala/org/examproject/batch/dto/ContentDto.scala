@@ -14,33 +14,35 @@
 
 package org.examproject.batch.dto;
 
+import java.lang.Long
+
+import scala.reflect.BeanProperty
+
+import java.lang.Boolean
+import java.lang.Long
+import java.util.Date
+
 /**
  * @author hiroxpepe
  */
-public class SimpleContentDto implements ContentDto {
+trait ContentDto {
+
+    @BeanProperty
+    var id: Long = _
     
-    private Long id;
+    @BeanProperty
+    var name: String = _
     
-    private String name;
+    @BeanProperty
+    var created: Date = _
+    
+    @BeanProperty
+    var completed: Date = _
 
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
+    @BeanProperty
+    var isError: Boolean = false
+    
+    @BeanProperty
+    var isComplete: Boolean = false
     
 }

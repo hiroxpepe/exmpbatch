@@ -58,6 +58,9 @@ public class ContentItemProcessor implements ItemProcessor {
         } catch (Exception e) {
             LOG.error("error: " + e.getMessage());
             
+            // set the error flag to the dto.
+            dto.setIsError(true);
+            
             // must return the dto.
             return dto;
         }

@@ -44,15 +44,15 @@ public class ContentItemReader implements ItemReader<ContentDto>{
         // until list is null.
         if (! contentService.getList().isEmpty()) {
             
-            // TODO :
-            ContentDto dto = 
-                (ContentDto) contentService.getList().remove(0);
+            // get the dto from the service object.
+            ContentDto dto = contentService.getList().remove(0);
             
             LOG.debug(
                 "read -- id: " + dto.getId() +
                 " name: " + dto.getName()
             );
 
+            // return the dto.
             return dto;
         }
         

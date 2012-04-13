@@ -14,18 +14,23 @@
 
 package org.examproject.batch.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.inject.Inject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dozer.Mapper;
 import org.springframework.context.ApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 
+import org.examproject.batch.entity.Content;
 import org.examproject.batch.dto.ContentDto;
+import org.examproject.batch.repository.ContentRepository;
 
 /**
- * the simple service class.
+ * simple service class.
  * @author hiroxpepe
  */
 public class SimpleContentService implements ContentService {
@@ -36,30 +41,57 @@ public class SimpleContentService implements ContentService {
 
     @Inject
     private final ApplicationContext context = null;
+    
+    @Inject
+    private final Mapper mapper = null;
+    
+    @Inject
+    private final ContentRepository contentRepository = null;
 
+    private List<Content> entityList = new CopyOnWriteArrayList<Content>();
+    
     private List<ContentDto> dtoList = new CopyOnWriteArrayList<ContentDto>();
+    
+    private List<ContentDto> returnedDtoList = new CopyOnWriteArrayList<ContentDto>();
 
+    ///////////////////////////////////////////////////////////////////////////
+    // public methods
+    
     @Override
+    @Transactional
     public void load() {
         LOG.debug("called.");
-        try {
-            // TODO:
+        try {            
+            // initialize.
+            clearList();
             
-            // dummy content objects.
-            ContentDto dto1 = context.getBean(ContentDto.class);
-            dto1.setId(new Long(1));
-            dto1.setName("hoge");
-            dtoList.add(dto1);
+            // get the entity list.
+            entityList = contentRepository.findNotCompleted();
             
-            ContentDto dto2 = context.getBean(ContentDto.class);
-            dto2.setId(new Long(2));
-            dto2.setName("piyo");
-            dtoList.add(dto2);
-            
-            ContentDto dto3 = context.getBean(ContentDto.class);
-            dto3.setId(new Long(3));
-            dto3.setName("fuga");
-            dtoList.add(dto3);
+            // map the entity to dto.
+            for (Content entity: entityList) {
+                
+                // create the dto.
+                ContentDto dto = context.getBean(
+                    ContentDto.class
+                );
+                
+                // map the entity to dto.
+                mapper.map(
+                    entity,
+                    dto
+                );
+                
+//                // set the date.
+//                dto.setCreated(
+//                    new Date()
+//                );
+                
+                // add to the dto list.
+                dtoList.add(
+                    dto
+                );
+            }
             
         } catch (Exception e) {
             LOG.error("Exception occurred. " + e.getMessage());
@@ -68,11 +100,34 @@ public class SimpleContentService implements ContentService {
     }
 
     @Override
+    @Transactional
     public void save() {
         LOG.debug("called.");
         try {
-            // TODO:
             // save to repository.
+            for (ContentDto dto : returnedDtoList) {
+                
+                // if the dto has an error it will be skipped.
+                if (dto.getIsError()) {
+                    continue;
+                }
+                
+                // find the entity.
+                Content entiry = contentRepository.findById(
+                    dto.getId()
+                );
+                
+                // map the dto to entity.
+                mapper.map(
+                    dto,
+                    entiry
+                );
+                
+                // save the entity.
+                contentRepository.save(
+                    entiry
+                );
+            }
             
         } catch (Exception e) {
             LOG.error("Exception occurred. " + e.getMessage());
@@ -81,17 +136,32 @@ public class SimpleContentService implements ContentService {
     }
 
     @Override
+    @Transactional
     public void receive(ContentDto dto) {
-        // TODO:
-        LOG.debug(
-            "receive -- id: " + dto.getId() +
-            " name: " + dto.getName()
+        LOG.debug("called.");
+        
+        // add to the returned list.
+        returnedDtoList.add(
+            dto
         );
     }
 
     @Override
+    @Transactional
     public List<ContentDto> getList(){
+        LOG.debug("called.");
+        
+        // return the dto list.
         return dtoList;
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // private methods
+    
+    private void clearList() {
+        entityList.clear();
+        dtoList.clear();
+        returnedDtoList.clear();
+    }
+    
 }

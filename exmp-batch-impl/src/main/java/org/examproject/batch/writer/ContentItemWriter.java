@@ -49,15 +49,31 @@ public class ContentItemWriter implements ItemWriter<ContentDto> {
                     " name: " + dto.getName()
                 );
                 
+                ///////////////////////////////////////////
+                // if this is the final write module.
+                
+                // set the completed flag.
+                dto.setIsComplete(true);
+                dto.setCompleted(
+                    new Date()
+                );
+                
                 // receive the dto.
                 // most important.
                 contentService.receive(
                     dto
                 );
                 
+                LOG.debug(
+                    "receive -- id: " + dto.getId() +
+                    " name: " + dto.getName()
+                );
+                
             } catch (Exception e) {
                 LOG.error("error: " + e.getMessage());
-                throw new RuntimeException(e);
+                
+                // set the error flag to the dto.
+                dto.setIsError(true);
             }
         }
     }
