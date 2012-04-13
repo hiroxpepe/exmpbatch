@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package org.examproject.batch.service;
+package org.examproject.batch.service
 
 import java.util.List;
 
@@ -24,11 +24,11 @@ import org.examproject.batch.dto.ContentDto;
  */
 trait ContentService {
 
-    def getList(): List[ContentDto]
+    def getList(): List[ContentDto] {}
 
-    def receive(o: ContentDto)
+    def receive(o: ContentDto) {}
 
-    def load()
+    def load() {}
 
-    def save()
+    def save() {}
 }

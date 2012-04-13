@@ -82,11 +82,6 @@ public class SimpleContentService implements ContentService {
                     dto
                 );
                 
-//                // set the date.
-//                dto.setCreated(
-//                    new Date()
-//                );
-                
                 // add to the dto list.
                 dtoList.add(
                     dto

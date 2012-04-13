@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package org.examproject.batch.dto;
+package org.examproject.batch.dto
 
 import java.lang.Long
 
